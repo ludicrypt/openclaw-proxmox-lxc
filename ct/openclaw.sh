@@ -5,6 +5,10 @@ source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxV
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/openclaw/openclaw
 
+# Patch build_container to fetch install script from this repo instead of community-scripts
+OPENCLAW_INSTALL_URL="https://raw.githubusercontent.com/ludicrypt/openclaw-proxmox-lxc/main/install/openclaw-install.sh"
+eval "$(declare -f build_container | sed "s|https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/install/\${var_install}.sh|${OPENCLAW_INSTALL_URL}|")"
+
 APP="OpenClaw"
 var_tags="${var_tags:-ai;docker}"
 var_cpu="${var_cpu:-2}"

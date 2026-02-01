@@ -35,6 +35,7 @@ These patterns must be preserved when editing the scripts:
 
 ## Key Design Decisions
 
+- **Install script URL patch**: The community-scripts `build_container()` function hardcodes fetching install scripts from `community-scripts/ProxmoxVE/main/install/`. Since this is a standalone repo, `ct/openclaw.sh` patches the function after sourcing `build.func` using `declare -f` + `sed` + `eval` to redirect the install URL to this repo. If `build.func` upstream changes the install URL pattern, this patch may break.
 - OpenClaw is installed **natively via npm**, not inside Docker. Docker is only present for OpenClaw's sandbox execution feature. This avoids Docker-in-Docker-in-LXC complexity.
 - The `docker` tag in `var_tags` signals the build framework to enable `nesting=1,keyctl=1` LXC features automatically.
 - Nginx uses `proxy_read_timeout 86400s` (24h) because OpenClaw maintains long-lived WebSocket connections.
